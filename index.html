@@ -1,780 +1,496 @@
 <!DOCTYPE html>
 <html lang="uk">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#10120f" />
+  <meta name="description" content="Портфоліо L1ton47 — навчальні вебпроєкти, сайти про автомобілі, технології та концепції для бізнесу." />
+  <title>L1ton47 — Портфоліо веброзробки</title>
+  <style>
+    :root {
+      --bg: #10120f;
+      --bg-soft: #151813;
+      --panel: #1b1f18;
+      --panel-hover: #22271e;
+      --line: rgba(236, 245, 224, .13);
+      --text: #f2f5ec;
+      --muted: #a1a99a;
+      --accent: #c7f36b;
+      --accent-dark: #8ebc36;
+      --radius: 22px;
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 95px; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 10% 0%, rgba(160, 209, 75, .09), transparent 34%),
+                  radial-gradient(ellipse at 100% 45%, rgba(109, 137, 73, .07), transparent 30%);
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .container { width: min(var(--max), calc(100% - 44px)); margin-inline: auto; }
+    .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--accent); text-transform: uppercase; letter-spacing: .16em; font-size: .72rem; font-weight: 800; }
+    .eyebrow::before { content: ""; width: 24px; height: 1px; background: var(--accent); }
+    .section { padding: 96px 0; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 28px; margin-bottom: 35px; }
+    .section-head h2 { margin: 10px 0 0; font-size: clamp(2rem, 5vw, 3.7rem); line-height: 1.04; letter-spacing: -.055em; }
+    .section-head p { max-width: 440px; margin: 0; color: var(--muted); font-size: .96rem; }
+    .accent { color: var(--accent); }
 
-    <meta name="description"
-        content="Портфоліо L1ton47 — сайти, створені за допомогою HTML та CSS.">
-    <meta name="keywords"
-        content="L1ton47, портфоліо, HTML, CSS, веброзробка, сайти">
+    /* Navigation */
+    .site-header { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--line); background: rgba(16, 18, 15, .82); backdrop-filter: blur(18px); }
+    .nav { min-height: 76px; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-weight: 900; letter-spacing: -.04em; font-size: 1.05rem; }
+    .brand-mark { display: grid; place-items: center; width: 35px; height: 35px; border-radius: 11px; background: var(--accent); color: #151910; font-size: .78rem; font-weight: 950; letter-spacing: -.07em; transform: rotate(-5deg); }
+    .nav-links { display: flex; gap: 29px; align-items: center; color: #c3c9bc; font-size: .86rem; }
+    .nav-links a { transition: color .2s ease; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta, .button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid transparent; border-radius: 100px; padding: 12px 18px; font-size: .88rem; font-weight: 800; transition: transform .2s ease, background .2s ease, border-color .2s ease; cursor: pointer; }
+    .nav-cta, .button-primary { background: var(--accent); color: #151910; }
+    .nav-cta:hover, .button-primary:hover { transform: translateY(-2px); background: #d5ff83; }
+    .button-secondary { border-color: var(--line); color: var(--text); background: rgba(255,255,255,.02); }
+    .button-secondary:hover { border-color: rgba(199,243,107,.55); transform: translateY(-2px); }
+    .menu-toggle { display: none; width: 43px; height: 43px; border-radius: 14px; color: var(--text); background: var(--panel); border: 1px solid var(--line); cursor: pointer; }
 
-    <title>L1ton47 | Портфоліо</title>
+    /* Hero */
+    .hero { padding: 90px 0 69px; min-height: 625px; display: flex; align-items: center; }
+    .hero-grid { width: 100%; display: grid; grid-template-columns: 1.12fr .88fr; align-items: center; gap: 64px; }
+    .availability { display: inline-flex; align-items: center; gap: 9px; padding: 7px 12px; border: 1px solid var(--line); border-radius: 99px; color: #c7cebf; font-size: .76rem; background: rgba(255,255,255,.025); }
+    .availability-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    .availability-dot::after { content: ""; position: absolute; inset: -4px; border: 1px solid rgba(199,243,107,.55); border-radius: 50%; animation: ping 2s infinite; }
+    @keyframes ping { 0% { transform: scale(.65); opacity: 1; } 100% { transform: scale(1.8); opacity: 0; } }
+    .hero h1 { margin: 25px 0 20px; font-size: clamp(3.5rem, 7.7vw, 6.5rem); line-height: .96; letter-spacing: -.085em; font-weight: 900; }
+    .hero h1 .outline { color: transparent; -webkit-text-stroke: 1.2px rgba(242,245,236,.72); }
+    .hero-copy { max-width: 580px; color: var(--muted); font-size: clamp(1rem, 1.7vw, 1.15rem); }
+    .hero-copy strong { color: var(--text); font-weight: 700; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 35px; color: var(--muted); font-size: .8rem; }
+    .hero-meta span { display: flex; align-items: center; gap: 8px; }
+    .hero-meta b { color: var(--text); font-size: 1.08rem; }
+    .hero-visual { position: relative; min-height: 410px; display: grid; place-items: center; }
+    .visual-glow { position: absolute; width: 290px; height: 290px; background: rgba(199,243,107,.12); filter: blur(70px); border-radius: 50%; }
+    .code-window { position: relative; width: min(100%, 445px); padding: 17px; background: rgba(24,28,22,.9); border: 1px solid rgba(236,245,224,.16); border-radius: 20px; box-shadow: 0 30px 90px rgba(0,0,0,.35); transform: rotate(2deg); }
+    .window-top { display: flex; align-items: center; gap: 6px; padding: 0 0 15px; border-bottom: 1px solid var(--line); color: #6f7868; font-size: .7rem; }
+    .window-dot { width: 7px; height: 7px; background: #62695a; border-radius: 50%; }
+    .window-file { margin-left: auto; }
+    .code-body { padding: 16px 5px 3px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: clamp(.7rem, 1.3vw, .84rem); line-height: 2; color: #aab49c; }
+    .code-body .indent { padding-left: 20px; }
+    .code-body .code-green { color: var(--accent); }
+    .code-body .code-blue { color: #9cc8fb; }
+    .code-body .code-muted { color: #687264; }
+    .code-bottom { display: flex; justify-content: space-between; margin-top: 18px; padding: 12px 3px 0; border-top: 1px solid var(--line); color: #8b9582; font-size: .69rem; }
+    .floating-label { position: absolute; right: -8px; bottom: 24px; padding: 13px 16px; border: 1px solid rgba(199,243,107,.35); border-radius: 15px; background: #20261a; box-shadow: 0 14px 40px rgba(0,0,0,.3); transform: rotate(-4deg); }
+    .floating-label b { display: block; color: var(--accent); font-size: 1.3rem; line-height: 1.2; }
+    .floating-label span { color: #c0c9b4; font-size: .7rem; }
+    .hero-index { position: absolute; left: -10px; top: 40px; color: rgba(242,245,236,.12); font-size: 5.5rem; font-weight: 950; letter-spacing: -.1em; writing-mode: vertical-rl; }
 
-    <link rel="stylesheet" href="style.css">
+    /* Quick strip */
+    .tech-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.016); }
+    .tech-list { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 21px 0; flex-wrap: wrap; }
+    .tech-list span { color: #bec6b5; font-size: .77rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .tech-list span:first-child { color: #707a68; }
+    .tech-list i { width: 4px; height: 4px; background: var(--accent-dark); border-radius: 50%; }
+
+    /* Projects */
+    .projects-section { padding-top: 108px; }
+    .project-tools { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin: 0 0 25px; }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+    .filter-btn { padding: 8px 13px; border-radius: 99px; border: 1px solid var(--line); background: transparent; color: #aab3a1; font-size: .77rem; cursor: pointer; transition: .2s ease; }
+    .filter-btn:hover, .filter-btn[aria-pressed="true"] { color: #151910; background: var(--accent); border-color: var(--accent); }
+    .project-search { width: min(240px, 100%); display: flex; align-items: center; gap: 8px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 99px; background: rgba(255,255,255,.025); color: var(--muted); }
+    .project-search input { width: 100%; min-width: 0; border: 0; outline: 0; color: var(--text); background: transparent; font-size: .78rem; }
+    .project-search input::placeholder { color: #77806f; }
+    .projects-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; }
+    .project-card[hidden] { display: none; }
+    .project-card { min-width: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: rgba(25,29,23,.88); display: flex; flex-direction: column; transition: transform .25s ease, border-color .25s ease, background .25s ease; animation: cardIn .45s both; }
+    .project-card:hover { transform: translateY(-5px); border-color: rgba(199,243,107,.42); background: var(--panel-hover); }
+    @keyframes cardIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .project-cover { min-height: 195px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; isolation: isolate; }
+    .project-cover::before, .project-cover::after { content: ""; position: absolute; z-index: -1; }
+    .cover-label { position: absolute; left: 18px; top: 15px; font-size: .65rem; letter-spacing: .13em; font-weight: 850; text-transform: uppercase; opacity: .78; }
+    .cover-no { position: absolute; right: 17px; top: 12px; font-size: .72rem; font-weight: 800; opacity: .55; }
+    .cover-name { position: relative; font-weight: 950; font-size: clamp(1.7rem, 3vw, 2.7rem); letter-spacing: -.07em; text-align: center; line-height: 1; }
+    .cover-sub { position: absolute; bottom: 17px; left: 18px; right: 18px; text-align: center; font-size: .61rem; letter-spacing: .22em; font-weight: 750; opacity: .72; }
+    .cover-rtx { color: #ebffe4; background: radial-gradient(ellipse at 52% 45%, #296c31 0%, #163c1e 37%, #0b1c0e 100%); }
+    .cover-rtx::before { width: 73%; height: 46%; border: 5px solid #7ac75f; border-radius: 16px; transform: rotate(-12deg); box-shadow: 0 0 40px #57c65255, inset 0 0 20px #57c65244; }
+    .cover-rtx::after { width: 19px; height: 80%; left: 22%; top: 12%; background: repeating-linear-gradient(0deg, #98e875 0 3px, transparent 3px 9px); opacity: .58; transform: rotate(-12deg); }
+    .cover-bmw { color: #fff; background: radial-gradient(circle at 50% 55%, #343b43, #151a21 65%, #0c0f13); }
+    .bmw-roundel { width: 100px; height: 100px; display: grid; place-items: center; border: 7px solid #111; outline: 3px solid #e8edf1; border-radius: 50%; background: conic-gradient(#dfeaf4 0 25%, #3477b9 25% 50%, #dfeaf4 50% 75%, #3477b9 75%); color: #10151a; font-weight: 950; font-size: 1rem; box-shadow: 0 15px 36px #0008; }
+    .cover-audi { color: #f8fbff; background: linear-gradient(140deg, #1b242c, #111418 58%, #313c45); }
+    .audi-rings { display: flex; align-items: center; justify-content: center; }
+    .audi-rings i { width: 43px; height: 43px; border: 4px solid #e6e9eb; border-radius: 50%; margin-left: -7px; box-shadow: 0 2px 7px #000; }
+    .audi-rings i:first-child { margin-left: 0; }
+    .cover-maison { color: #f7ead4; background: radial-gradient(circle at 50% 40%, #6a4936, #3b2820 55%, #1d1714); }
+    .plate { width: 113px; height: 113px; display: grid; place-items: center; border-radius: 50%; border: 5px double #dfc7a4; box-shadow: 0 0 0 12px #e6d2b31a, 0 15px 30px #0007; }
+    .plate::before { content: ""; width: 54px; height: 54px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e7bd72 0 12%, #8e4430 13% 21%, #47734b 22% 29%, #c57b36 30% 40%, #f3dfb5 41%); }
+    .cover-brutal { color: #ead7b7; background: linear-gradient(135deg, #3a3329, #1a1815 72%); }
+    .cover-brutal::before { inset: 18px; border: 1px solid #bda47c70; }
+    .barber-mark { font-size: 2.7rem; font-family: Georgia, serif; font-style: italic; font-weight: 700; border: 1px solid #cbb58c; padding: 8px 18px; letter-spacing: -.08em; }
+    .cover-mercedes { color: #f3f5f6; background: radial-gradient(circle at 50% 45%, #344149, #192126 62%, #0f1418); }
+    .merc-star { width: 96px; height: 96px; border: 2px solid #f1f4f4; border-radius: 50%; display: grid; place-items: center; font-size: 4.4rem; font-weight: 300; line-height: 1; text-shadow: 0 0 18px #fff5; box-shadow: 0 0 0 8px #ffffff08; }
+    .project-content { padding: 20px 20px 18px; display: flex; flex-direction: column; align-items: flex-start; flex: 1; }
+    .project-topline { display: flex; justify-content: space-between; align-items: center; gap: 12px; width: 100%; margin-bottom: 11px; }
+    .project-type { color: var(--accent); font-size: .67rem; letter-spacing: .13em; font-weight: 850; text-transform: uppercase; }
+    .project-year { color: #77816f; font-size: .7rem; }
+    .project-content h3 { margin: 0 0 9px; font-size: 1.35rem; letter-spacing: -.045em; line-height: 1.2; }
+    .project-content p { margin: 0 0 17px; color: var(--muted); font-size: .86rem; line-height: 1.7; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; margin-bottom: 19px; }
+    .tag { border: 1px solid var(--line); border-radius: 6px; padding: 4px 7px; color: #aab4a0; font-size: .64rem; font-weight: 650; }
+    .project-link { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 12px; padding-top: 13px; border-top: 1px solid var(--line); color: var(--text); font-weight: 800; font-size: .82rem; }
+    .project-link span:last-child { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #2a3023; color: var(--accent); font-size: 1rem; transition: transform .2s ease; }
+    .project-link:hover { color: var(--accent); }
+    .project-link:hover span:last-child { transform: translate(2px, -2px); }
+    .empty-state { display: none; padding: 36px; border: 1px dashed var(--line); border-radius: var(--radius); color: var(--muted); text-align: center; }
+
+    /* About */
+    .about-section { background: rgba(255,255,255,.018); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .about-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 74px; align-items: start; }
+    .about-big { margin: 13px 0 0; font-size: clamp(2.25rem, 5vw, 4.5rem); line-height: 1.03; letter-spacing: -.07em; }
+    .about-text { color: var(--muted); font-size: .98rem; }
+    .about-text p { margin: 0 0 17px; }
+    .about-text strong { color: var(--text); }
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 27px; }
+    .skill { padding: 16px; border: 1px solid var(--line); background: #181c16; border-radius: 14px; }
+    .skill-symbol { display: grid; place-items: center; width: 32px; height: 32px; margin-bottom: 13px; border-radius: 10px; color: var(--accent); background: #c7f36b13; font-size: .82rem; font-weight: 900; }
+    .skill b { display: block; color: var(--text); font-size: .86rem; }
+    .skill span { color: #899382; font-size: .71rem; }
+
+    /* Process */
+    .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 34px; }
+    .process-item { padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(145deg, #1a1e17, #141710); }
+    .process-num { color: var(--accent); font-size: .72rem; font-weight: 900; letter-spacing: .14em; }
+    .process-item h3 { margin: 24px 0 8px; font-size: 1.15rem; letter-spacing: -.035em; }
+    .process-item p { color: var(--muted); margin: 0; font-size: .85rem; }
+
+    /* Contact */
+    .contact-section { padding: 100px 0 90px; }
+    .contact-panel { position: relative; padding: clamp(28px, 6vw, 64px); border-radius: 27px; background: var(--accent); color: #151910; overflow: hidden; }
+    .contact-panel::after { content: "L1"; position: absolute; right: -5px; bottom: -105px; font-size: clamp(14rem, 29vw, 28rem); line-height: 1; font-weight: 950; letter-spacing: -.12em; color: rgba(21,25,16,.055); pointer-events: none; }
+    .contact-panel .eyebrow { color: #35451c; }
+    .contact-panel .eyebrow::before { background: #35451c; }
+    .contact-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1.1fr .9fr; gap: 42px; align-items: end; }
+    .contact-panel h2 { margin: 14px 0 18px; font-size: clamp(2.7rem, 6vw, 5.6rem); line-height: .98; letter-spacing: -.08em; }
+    .contact-panel p { max-width: 490px; color: #3b4828; margin: 0; }
+    .contact-list { display: grid; gap: 9px; }
+    .contact-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border: 1px solid rgba(21,25,16,.2); border-radius: 13px; background: rgba(255,255,255,.2); font-size: .87rem; font-weight: 850; transition: background .2s ease, transform .2s ease; }
+    .contact-link:hover { background: rgba(255,255,255,.46); transform: translateX(3px); }
+    .contact-link small { display: block; font-size: .69rem; font-weight: 600; opacity: .69; }
+    .contact-arrow { font-size: 1.1rem; }
+
+    footer { padding: 25px 0 32px; }
+    .footer-row { display: flex; justify-content: space-between; gap: 20px; align-items: center; color: #7f8877; font-size: .75rem; }
+    .footer-row strong { color: #b3bcaa; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 17px; }
+    .footer-links a:hover { color: var(--accent); }
+    .back-top { position: fixed; z-index: 25; right: 20px; bottom: 20px; display: grid; place-items: center; width: 43px; height: 43px; border: 1px solid var(--line); border-radius: 14px; background: #20251c; color: var(--accent); box-shadow: 0 10px 25px #0005; opacity: 0; pointer-events: none; transform: translateY(8px); transition: .2s ease; }
+    .back-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .reveal { opacity: 0; transform: translateY(17px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 970px) {
+      .hero-grid { gap: 25px; grid-template-columns: 1.05fr .95fr; }
+      .hero-visual { min-height: 360px; }
+      .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .about-grid { gap: 42px; }
+      .contact-inner { grid-template-columns: 1fr .95fr; }
+    }
+    @media (max-width: 700px) {
+      .container { width: min(var(--max), calc(100% - 32px)); }
+      .section { padding: 70px 0; }
+      .nav { min-height: 68px; }
+      .menu-toggle { display: inline-grid; place-items: center; }
+      .nav-cta { display: none; }
+      .nav-links { display: none; position: absolute; left: 16px; right: 16px; top: 76px; padding: 15px; flex-direction: column; align-items: stretch; gap: 0; background: #1a1e17; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 18px 45px #0008; }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 12px; border-radius: 9px; }
+      .nav-links a:hover { background: #ffffff08; }
+      .hero { min-height: 0; padding: 67px 0 55px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 20px; }
+      .hero h1 { font-size: clamp(3.7rem, 16vw, 6rem); }
+      .hero-visual { min-height: 310px; max-width: 500px; width: 100%; margin: 0 auto; }
+      .hero-index { font-size: 4rem; top: 13px; left: -7px; }
+      .floating-label { right: -2px; bottom: 8px; }
+      .section-head { align-items: flex-start; flex-direction: column; gap: 15px; }
+      .section-head p { max-width: 550px; }
+      .project-tools { flex-direction: column; align-items: stretch; }
+      .project-search { width: 100%; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-cover { min-height: 210px; }
+      .cover-name { font-size: 3rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 24px; }
+      .skills-grid { grid-template-columns: repeat(3, 1fr); }
+      .skill { padding: 12px; }
+      .process-grid { grid-template-columns: 1fr; }
+      .process-item { padding: 21px; }
+      .process-item h3 { margin-top: 14px; }
+      .contact-section { padding: 70px 0 55px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 27px; }
+      .footer-row { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 390px) {
+      .skills-grid { grid-template-columns: 1fr; }
+      .skill { display: flex; gap: 12px; align-items: center; }
+      .skill-symbol { flex-shrink: 0; margin: 0; }
+      .skill span { display: block; }
+      .hero-meta { gap: 13px; }
+      .hero-meta span { font-size: .72rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
 </head>
-
 <body>
-
-<header class="navbar">
-
-    <a href="#home" class="logo">
-        L1ton47<span>.</span>
-    </a>
-
-    <nav>
-        <a href="#home">Головна</a>
-        <a href="#about">Про мене</a>
-        <a href="#skills">Навички</a>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="L1ton47 — на початок"><span class="brand-mark">L47</span><span>L1ton47<span class="accent">.</span></span></a>
+      <nav class="nav-links" id="navLinks" aria-label="Головна навігація">
         <a href="#projects">Проєкти</a>
+        <a href="#about">Про мене</a>
+        <a href="#process">Як працюю</a>
         <a href="#contact">Контакти</a>
-    </nav>
+      </nav>
+      <a class="nav-cta" href="#contact">Зв’язатися <span aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Відкрити меню" aria-expanded="false" aria-controls="navLinks"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </header>
 
-</header>
-
-
-<main>
-
-    <!-- =========================
-         ГОЛОВНИЙ ЕКРАН
-    ========================== -->
-
+  <main>
     <section class="hero" id="home">
-
-        <div class="hero-grid"></div>
-
-        <div class="hero-glow glow-one"></div>
-        <div class="hero-glow glow-two"></div>
-
-        <div class="hero-content">
-
-            <p class="hero-label">
-                <span></span>
-                ВЕБРОЗРОБКА · HTML · CSS
-            </p>
-
-            <h1>
-                СТВОРЮЮ
-                <strong>САЙТИ</strong>
-                <em>З КОДУ.</em>
-            </h1>
-
-            <p class="hero-description">
-                Я початківець у веброзробці. Вивчаю HTML та CSS,
-                створюю власні сайти та поступово покращую свої навички.
-            </p>
-
-            <div class="hero-buttons">
-
-                <a href="#projects" class="neon-button">
-                    Переглянути проєкти
-                </a>
-
-                <a href="#contact" class="text-button">
-                    Мої контакти
-                    <span>→</span>
-                </a>
-
+      <div class="container hero-grid">
+        <div class="hero-copy-block">
+          <div class="availability"><span class="availability-dot"></span> Портфоліо · Веброзробка</div>
+          <h1>Ідеї.<br><span class="outline">Дизайн.</span><br><span class="accent">Код.</span></h1>
+          <p class="hero-copy">Привіт, я <strong>L1ton47</strong>. Створюю сайти, експериментую з візуальним стилем і вчуся на практиці — від автомобільних проєктів до концепцій для бізнесу.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#projects">Дивитися проєкти <span aria-hidden="true">↓</span></a>
+            <a class="button button-secondary" href="#contact">Мої контакти <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="hero-meta">
+            <span><b>06</b> опублікованих сайтів</span>
+            <span><b>HTML</b> структура</span>
+            <span><b>CSS</b> стиль та адаптивність</span>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Декоративне вікно з кодом">
+          <span class="hero-index">01</span><div class="visual-glow"></div>
+          <div class="code-window">
+            <div class="window-top"><i class="window-dot"></i><i class="window-dot"></i><i class="window-dot"></i><span class="window-file">portfolio.html</span></div>
+            <div class="code-body">
+              <div><span class="code-blue">&lt;section</span> <span class="code-green">class</span>=<span class="code-green">"my-work"</span><span class="code-blue">&gt;</span></div>
+              <div class="indent"><span class="code-blue">&lt;h1&gt;</span>Привіт, світ!<span class="code-blue">&lt;/h1&gt;</span></div>
+              <div class="indent"><span class="code-blue">&lt;p&gt;</span>Створюю власні сайти<span class="code-blue">&lt;/p&gt;</span></div>
+              <div class="indent"><span class="code-muted">&lt;!-- Постійно навчаюсь --&gt;</span></div>
+              <div><span class="code-blue">&lt;/section&gt;</span></div>
+              <div style="height:10px"></div>
+              <div><span class="code-blue">.my-work</span> <span class="code-muted">{</span></div>
+              <div class="indent"><span class="code-green">display</span>: grid;</div>
+              <div class="indent"><span class="code-green">gap</span>: <span class="code-blue">24px</span>;</div>
+              <div class="indent"><span class="code-green">ideas</span>: <span class="code-blue">infinite</span>;</div>
+              <div><span class="code-muted">}</span></div>
             </div>
-
+            <div class="code-bottom"><span>● HTML · CSS · JavaScript</span><span>main ⎇</span></div>
+          </div>
+          <div class="floating-label"><b>06<span style="font-size:.85rem">+</span></b><span>власних вебпроєктів</span></div>
         </div>
-
-
-        <!-- ВІКНО КОДУ -->
-
-        <div class="hero-side">
-
-            <div class="orbit orbit-one"></div>
-            <div class="orbit orbit-two"></div>
-
-            <div class="code-window">
-
-                <div class="window-top">
-
-                    <div class="window-dots">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-
-                    <p>мій-сайт.html</p>
-
-                </div>
-
-
-                <div class="code-content">
-
-                    <p>
-                        <span class="purple">&lt;section</span>
-                        <span class="blue"> class=</span>
-                        <span class="pink">"портфоліо"</span>
-                        <span class="purple">&gt;</span>
-                    </p>
-
-                    <p class="indent-one">
-                        <span class="purple">&lt;h1&gt;</span>
-                    </p>
-
-                    <p class="indent-two">
-                        L1ton47
-                    </p>
-
-                    <p class="indent-one">
-                        <span class="purple">&lt;/h1&gt;</span>
-                    </p>
-
-                    <p>
-                        <span class="purple">&lt;/section&gt;</span>
-                    </p>
-
-                </div>
-
-
-                <div class="code-bottom">
-
-                    <span>HTML</span>
-                    <span>CSS</span>
-                    <span>2026</span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="scroll-text">
-            ПРОКРУТІТЬ НИЖЧЕ
-        </div>
-
+      </div>
     </section>
 
-
-    <!-- =========================
-         ПРО МЕНЕ
-    ========================== -->
-
-    <section class="about" id="about">
-
-        <div class="section-number">
-            01
-        </div>
-
-
-        <div class="about-heading">
-
-            <p class="small-title">
-                ПРО МЕНЕ
-            </p>
-
-            <h2>
-                Навчаюсь.
-                <br>
-                Створюю.
-                <br>
-                <span>Розвиваюсь.</span>
-            </h2>
-
-        </div>
-
-
-        <div class="about-description">
-
-            <p class="large-text">
-                Я тільки починаю свій шлях у веброзробці,
-                але вже створюю повноцінні сайти самостійно.
-            </p>
-
-            <p>
-                Мені цікаво розбиратися в тому, як працюють
-                вебсторінки, як будується їхня структура
-                та як за допомогою CSS створюється дизайн.
-            </p>
-
-            <p>
-                Зараз мій основний фокус — HTML та CSS.
-                Я стараюся не просто копіювати готовий код,
-                а розуміти, що робить кожна його частина.
-            </p>
-
-            <div class="about-line"></div>
-
-            <div class="about-bottom">
-
-                <span>МОЯ ОСНОВА</span>
-
-                <strong>
-                    HTML + CSS
-                </strong>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         НАВИЧКИ
-    ========================== -->
-
-    <section class="skills" id="skills">
-
-        <div class="skills-heading">
-
-            <div>
-
-                <p class="section-label">
-                    02 / НАВИЧКИ
-                </p>
-
-                <h2>
-                    Що я вже
-                    <span>вмію</span>
-                </h2>
-
-            </div>
-
-            <p class="skills-intro">
-                Основні інструменти та навички,
-                які я використовую для створення сайтів.
-            </p>
-
-        </div>
-
-
-        <div class="skills-layout">
-
-
-            <!-- HTML -->
-
-            <div class="skill-card skill-html">
-
-                <div class="skill-top">
-
-                    <span>01</span>
-
-                    <b>&lt;/&gt;</b>
-
-                </div>
-
-                <div class="skill-content">
-
-                    <h3>HTML</h3>
-
-                    <p>
-                        Створення структури вебсторінки,
-                        заголовків, секцій, посилань,
-                        зображень та інших елементів.
-                    </p>
-
-                </div>
-
-                <div class="skill-line"></div>
-
-                <span class="skill-caption">
-                    СТРУКТУРА
-                </span>
-
-            </div>
-
-
-            <!-- CSS -->
-
-            <div class="skill-card skill-css">
-
-                <div class="skill-top">
-
-                    <span>02</span>
-
-                    <b>✦</b>
-
-                </div>
-
-                <div class="skill-content">
-
-                    <h3>CSS</h3>
-
-                    <p>
-                        Оформлення сайтів, кольори,
-                        шрифти, блоки, відступи,
-                        анімації та адаптивність.
-                    </p>
-
-                </div>
-
-                <div class="skill-line"></div>
-
-                <span class="skill-caption">
-                    ДИЗАЙН
-                </span>
-
-            </div>
-
-
-            <!-- GITHUB -->
-
-            <div class="skill-card skill-github">
-
-                <div class="skill-top">
-
-                    <span>03</span>
-
-                    <b>GH</b>
-
-                </div>
-
-                <div class="skill-content">
-
-                    <h3>GitHub</h3>
-
-                    <p>
-                        Робота з репозиторіями,
-                        збереження коду та
-                        публікація власних сайтів.
-                    </p>
-
-                </div>
-
-                <div class="skill-line"></div>
-
-                <span class="skill-caption">
-                    ПУБЛІКАЦІЯ
-                </span>
-
-            </div>
-
-
-            <!-- МЕТА -->
-
-            <div class="skill-info">
-
-                <div class="info-number">
-                    04
-                </div>
-
-                <p class="info-title">
-                    МОЯ МЕТА ЗАРАЗ
-                </p>
-
-                <h3>
-                    Створювати
-                    <span>кращі сайти.</span>
-                </h3>
-
-                <p>
-                    Практикуватися, робити власні проєкти
-                    та поступово підвищувати якість своїх
-                    вебсторінок.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         ПРОЄКТИ
-    ========================== -->
-
-    <section class="projects" id="projects">
-
-        <div class="projects-header">
-
-            <div>
-
-                <p class="section-label">
-                    03 / ПРОЄКТИ
-                </p>
-
-                <h2>
-                    Мої
-                    <span>роботи</span>
-                </h2>
-
-            </div>
-
-            <p>
-                Перші реальні проєкти,
-                створені під час навчання.
-            </p>
-
-        </div>
-
-
-        <div class="projects-list">
-
-
-            <!-- =========================
-                 ПРОЄКТ 01 — RTX
-            ========================== -->
-
-            <article class="project-card">
-
-                <div class="project-visual rtx-visual">
-
-                    <div class="project-bg-grid"></div>
-
-                    <div class="project-glow"></div>
-
-                    <div class="gpu">
-
-                        <div class="gpu-top">
-                            NVIDIA
-                        </div>
-
-                        <div class="gpu-name">
-                            RTX
-                            <small>3070 Ti</small>
-                        </div>
-
-                        <div class="gpu-line"></div>
-
-                        <div class="gpu-info">
-                            8 GB · GDDR6X
-                        </div>
-
-                    </div>
-
-                    <span class="project-number">
-                        ПРОЄКТ / 01
-                    </span>
-
-                </div>
-
-
-                <div class="project-info">
-
-                    <p class="project-type">
-                        HTML + CSS
-                    </p>
-
-                    <h3>
-                        Інформаційний
-                        <br>
-                        сайт про
-                        <strong>RTX 3070 Ti</strong>
-                    </h3>
-
-                    <p class="project-description">
-                        Інформаційний сайт про NVIDIA GeForce
-                        RTX 3070 Ti. На ньому зібрані характеристики
-                        відеокарти, інформація про технології,
-                        виробників та порівняння.
-                    </p>
-
-                    <div class="tags">
-
-                        <span>HTML</span>
-                        <span>CSS</span>
-                        <span>АДАПТИВНИЙ ДИЗАЙН</span>
-
-                    </div>
-
-                    <a
-                        href="https://l1ton47.github.io/RTX-3070-Ti/"
-                        target="_blank"
-                        rel="noopener"
-                        class="project-link"
-                    >
-                        Відкрити проєкт
-                        <span>↗</span>
-                    </a>
-
-                </div>
-
-            </article>
-
-
-            <!-- =========================
-                 ПРОЄКТ 02 — BMW
-            ========================== -->
-
-            <article class="project-card bmw-card">
-
-                <div class="project-visual bmw-visual">
-
-                    <div class="project-bg-grid"></div>
-
-                    <div class="bmw-glow"></div>
-
-                    <div class="bmw-logo">
-                        BMW
-                    </div>
-
-                    <div class="bmw-name">
-                        THE ULTIMATE
-                        <br>
-                        DRIVING MACHINE
-                    </div>
-
-                    <span class="project-number">
-                        ПРОЄКТ / 02
-                    </span>
-
-                </div>
-
-
-                <div class="project-info">
-
-                    <p class="project-type">
-                        HTML + CSS
-                    </p>
-
-                    <h3>
-                        Великий
-                        <br>
-                        сайт про
-                        <strong>BMW</strong>
-                    </h3>
-
-                    <p class="project-description">
-                        Темний автомобільний сайт про BMW.
-                        Тут зібрана інформація про моделі,
-                        історію бренду, цікаві факти та
-                        автомобільний світ BMW.
-                    </p>
-
-                    <div class="tags">
-
-                        <span>HTML</span>
-                        <span>CSS</span>
-                        <span>АНІМАЦІЇ</span>
-                        <span>АДАПТИВНИЙ ДИЗАЙН</span>
-
-                    </div>
-
-                    <a
-                        href="https://l1ton47.github.io/BMW/"
-                        target="_blank"
-                        rel="noopener"
-                        class="project-link"
-                    >
-                        Відкрити проєкт
-                        <span>↗</span>
-                    </a>
-
-                </div>
-
-            </article>
-
-        </div>
-
-
-        <div class="project-bottom">
-
-            <div class="project-bottom-number">
-                02
-            </div>
-
-            <div>
-
-                <p>
-                    МОЇ ПЕРШІ ВЕЛИКІ ПРОЄКТИ
-                </p>
-
-                <h3>
-                    Сайти, які я створив
-                    <span>власноруч.</span>
-                </h3>
-
-            </div>
-
-            <div class="project-arrow">
-                ↗
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         КОНТАКТИ
-    ========================== -->
-
-    <section class="contact" id="contact">
-
-        <div class="contact-bg">
-            &lt;/&gt;
-        </div>
-
-        <div class="contact-glow"></div>
-
-
-        <div class="contact-content">
-
-            <p class="section-label">
-                04 / КОНТАКТИ
-            </p>
-
-            <h2>
-                ЗВ'ЯЗАТИСЯ
-                <span>ЗІ МНОЮ.</span>
-            </h2>
-
-            <p class="contact-description">
-                Якщо хочеш зв'язатися зі мною,
-                нижче знаходяться мої основні контакти.
-            </p>
-
-
-            <div class="contacts-list">
-
-
-                <!-- TELEGRAM -->
-
-                <a
-                    href="https://t.me/L1ton47"
-                    target="_blank"
-                    rel="noopener"
-                    class="contact-item"
-                >
-
-                    <div class="contact-icon">
-                        TG
-                    </div>
-
-                    <div class="contact-info">
-
-                        <span>ТЕЛЕГРАМ</span>
-
-                        <strong>
-                            @L1ton47
-                        </strong>
-
-                    </div>
-
-                    <div class="contact-arrow">
-                        ↗
-                    </div>
-
-                </a>
-
-
-                <!-- DISCORD -->
-
-                <a
-                    href="https://discord.com/users/1537093310101848104"
-                    target="_blank"
-                    rel="noopener"
-                    class="contact-item"
-                >
-
-                    <div class="contact-icon">
-                        DC
-                    </div>
-
-                    <div class="contact-info">
-
-                        <span>DISCORD</span>
-
-                        <strong>
-                            L1ton47
-                        </strong>
-
-                    </div>
-
-                    <div class="contact-arrow">
-                        ↗
-                    </div>
-
-                </a>
-
-
-                <!-- ПОШТА -->
-
-                <a
-                    href="mailto:dimaminsk123@gmail.com"
-                    class="contact-item"
-                >
-
-                    <div class="contact-icon">
-                        @
-                    </div>
-
-                    <div class="contact-info">
-
-                        <span>ЕЛЕКТРОННА ПОШТА</span>
-
-                        <strong>
-                            dimaminsk123@gmail.com
-                        </strong>
-
-                    </div>
-
-                    <div class="contact-arrow">
-                        ↗
-                    </div>
-
-                </a>
-
-
-                <!-- GITHUB -->
-
-                <a
-                    href="https://github.com/L1ton47"
-                    target="_blank"
-                    rel="noopener"
-                    class="contact-item"
-                >
-
-                    <div class="contact-icon">
-                        GH
-                    </div>
-
-                    <div class="contact-info">
-
-                        <span>GITHUB</span>
-
-                        <strong>
-                            L1ton47
-                        </strong>
-
-                    </div>
-
-                    <div class="contact-arrow">
-                        ↗
-                    </div>
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-<!-- =========================
-     FOOTER
-========================== -->
-
-<footer>
-
-    <div class="footer-logo">
-        L1ton47<span>.</span>
+    <div class="tech-strip" aria-label="Технології">
+      <div class="container tech-list"><span>З чим працюю</span><span>HTML5</span><i></i><span>CSS3</span><i></i><span>JavaScript</span><i></i><span>GitHub Pages</span><i></i><span>UI / UX практика</span></div>
     </div>
 
-    <p>
-        Створено за допомогою HTML та CSS
-    </p>
+    <section class="section projects-section" id="projects">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><div class="eyebrow">Вибрані роботи · 01—06</div><h2>Проєкти, які<br>говорять <span class="accent">за мене.</span></h2></div>
+          <p>Кожен сайт — окрема тема, свій настрій і спроба зробити інтерфейс зручним. Натискай на картку, щоб відкрити опубліковану версію.</p>
+        </div>
+        <div class="project-tools reveal">
+          <div class="filters" role="group" aria-label="Фільтр за типом проєкту">
+            <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">Усі роботи <span>06</span></button>
+            <button class="filter-btn" type="button" data-filter="auto" aria-pressed="false">Автомобілі</button>
+            <button class="filter-btn" type="button" data-filter="tech" aria-pressed="false">Технології</button>
+            <button class="filter-btn" type="button" data-filter="business" aria-pressed="false">Бізнес-концепції</button>
+          </div>
+          <label class="project-search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="projectSearch" type="search" placeholder="Знайти проєкт..." aria-label="Пошук проєктів"></label>
+        </div>
 
-    <div class="footer-center">
-        Навчальний проєкт · Веброзробка
+        <div class="projects-grid" id="projectsGrid">
+          <article class="project-card reveal" data-category="tech" data-title="RTX 3070 Ti NVIDIA відеокарта технології">
+            <a href="https://l1ton47.github.io/RTX-3070-Ti/" target="_blank" rel="noopener noreferrer" aria-label="Відкрити сайт RTX 3070 Ti" class="project-cover cover-rtx">
+              <span class="cover-label">Hardware / NVIDIA</span><span class="cover-no">01 / 06</span><div class="cover-name">RTX<br>3070 Ti</div><span class="cover-sub">GEFORCE · AMPERE</span>
+            </a>
+            <div class="project-content"><div class="project-topline"><span class="project-type">Технології</span><span class="project-year">Інформаційний сайт</span></div><h3>NVIDIA GeForce RTX 3070 Ti</h3><p>Огляд відеокарти з характеристиками, поясненням технологій, порівняннями з іншими GPU та інформацією про енергоспоживання.</p><div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Інфографіка</span></div><a class="project-link" href="https://l1ton47.github.io/RTX-3070-Ti/" target="_blank" rel="noopener noreferrer"><span>Відкрити сайт</span><span aria-hidden="true">↗</span></a></div>
+          </article>
+
+          <article class="project-card reveal" data-category="auto" data-title="BMW автомобілі моделі історія">
+            <a href="https://l1ton47.github.io/BMW/" target="_blank" rel="noopener noreferrer" aria-label="Відкрити сайт BMW" class="project-cover cover-bmw">
+              <span class="cover-label">Automotive / Germany</span><span class="cover-no">02 / 06</span><div class="bmw-roundel">BMW</div><span class="cover-sub">THE ULTIMATE DRIVING MACHINE</span>
+            </a>
+            <div class="project-content"><div class="project-topline"><span class="project-type">Автомобілі</span><span class="project-year">Автомобільний сайт</span></div><h3>BMW — Ultimate Driving Machine</h3><p>Темний сайт у стилі BMW з автомобільними моделями, інформацією про бренд і акцентом на динамічному дизайні.</p><div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Анімації</span></div><a class="project-link" href="https://l1ton47.github.io/BMW/" target="_blank" rel="noopener noreferrer"><span>Відкрити сайт</span><span aria-hidden="true">↗</span></a></div>
+          </article>
+
+          <article class="project-card reveal" data-category="auto" data-title="Audi A6 C7 RS6 S8 автомобілі порівняння">
+            <a href="https://l1ton47.github.io/Audi/" target="_blank" rel="noopener noreferrer" aria-label="Відкрити сайт Audi" class="project-cover cover-audi">
+              <span class="cover-label">Audi / Legends</span><span class="cover-no">03 / 06</span><div class="audi-rings" aria-hidden="true"><i></i><i></i><i></i><i></i></div><span class="cover-sub">A6 C7 · RS6 C7 · S8 D4</span>
+            </a>
+            <div class="project-content"><div class="project-topline"><span class="project-type">Автомобілі</span><span class="project-year">Лендінг</span></div><h3>Audi Legends</h3><p>Три культові моделі Audi: A6 C7, RS6 C7 та S8 D4. Є порівняння, цікаві факти й короткі описи характеру кожного авто.</p><div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div><a class="project-link" href="https://l1ton47.github.io/Audi/" target="_blank" rel="noopener noreferrer"><span>Відкрити сайт</span><span aria-hidden="true">↗</span></a></div>
+          </article>
+
+          <article class="project-card reveal" data-category="business" data-title="MAISON ресторан меню бронювання їжа">
+            <a href="https://l1ton47.github.io/Maison_Restraunt/" target="_blank" rel="noopener noreferrer" aria-label="Відкрити сайт Maison Restaurant" class="project-cover cover-maison">
+              <span class="cover-label">Restaurant / Concept</span><span class="cover-no">04 / 06</span><div class="plate" aria-hidden="true"></div><div class="cover-name" style="position:absolute;bottom:42px;font-family:Georgia,serif;font-size:2.1rem;letter-spacing:.12em">MAISON</div><span class="cover-sub">MODERN CUISINE · WARM ATMOSPHERE</span>
+            </a>
+            <div class="project-content"><div class="project-topline"><span class="project-type">Бізнес-концепція</span><span class="project-year">Ресторан</span></div><h3>MAISON Restaurant</h3><p>Концепт сайту сучасного ресторану: меню з категоріями, картки страв, галерея, кошик деталей і демонстраційна форма бронювання.</p><div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div><a class="project-link" href="https://l1ton47.github.io/Maison_Restraunt/" target="_blank" rel="noopener noreferrer"><span>Відкрити сайт</span><span aria-hidden="true">↗</span></a></div>
+          </article>
+
+          <article class="project-card reveal" data-category="business" data-title="BRUTAL CUTS барбершоп стрижки vintage">
+            <a href="https://l1ton47.github.io/BRUTAL-CUTS-/" target="_blank" rel="noopener noreferrer" aria-label="Відкрити сайт Brutal Cuts" class="project-cover cover-brutal">
+              <span class="cover-label">Barber / Vintage</span><span class="cover-no">05 / 06</span><div class="barber-mark">B.CUTS</div><span class="cover-sub">THE ART OF BARBERING · EST. 1926</span>
+            </a>
+            <div class="project-content"><div class="project-topline"><span class="project-type">Бізнес-концепція</span><span class="project-year">Барбершоп</span></div><h3>BRUTAL CUTS</h3><p>Вінтажний концепт барбершопу з виразною типографікою, описом послуг, прайсом і демонстраційною формою запису.</p><div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Візуальний стиль</span></div><a class="project-link" href="https://l1ton47.github.io/BRUTAL-CUTS-/" target="_blank" rel="noopener noreferrer"><span>Відкрити сайт</span><span aria-hidden="true">↗</span></a></div>
+          </article>
+
+          <article class="project-card reveal" data-category="auto" data-title="Mercedes-Benz AMG Maybach CLK CLS банан">
+            <a href="https://l1ton47.github.io/Mercedes/" target="_blank" rel="noopener noreferrer" aria-label="Відкрити сайт Mercedes-Benz" class="project-cover cover-mercedes">
+              <span class="cover-label">Mercedes-Benz / Lifestyle</span><span class="cover-no">06 / 06</span><div class="merc-star" aria-hidden="true">✳</div><div class="cover-name" style="position:absolute;bottom:43px;font-size:1.9rem;letter-spacing:.08em">MERCEDES</div><span class="cover-sub">THE ART OF DRIVING</span>
+            </a>
+            <div class="project-content"><div class="project-topline"><span class="project-type">Автомобілі</span><span class="project-year">Автомобільний сайт</span></div><h3>Mercedes-Benz — The Art of Driving</h3><p>Добірка Mercedes різних характерів: CLK, C-Class, E-Class, CLS 63 AMG «банан», G-Class та розкішні моделі.</p><div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div><a class="project-link" href="https://l1ton47.github.io/Mercedes/" target="_blank" rel="noopener noreferrer"><span>Відкрити сайт</span><span aria-hidden="true">↗</span></a></div>
+          </article>
+        </div>
+        <div class="empty-state" id="emptyState">Не знайшов проєкт за цим запитом. Спробуй іншу назву або категорію.</div>
+      </div>
+    </section>
+
+    <section class="section about-section" id="about">
+      <div class="container about-grid">
+        <div class="reveal"><div class="eyebrow">Коротко про мене</div><h2 class="about-big">Від першого<br>рядка коду<br>до <span class="accent">власних</span><br>проєктів.</h2></div>
+        <div class="about-text reveal">
+          <p>Я <strong>L1ton47</strong> — початківець у веброзробці. Створюю власні сайти, пробую різні стилі оформлення та вдосконалюю навички з кожним новим проєктом.</p>
+          <p>Мені цікаво поєднувати структуру, зовнішній вигляд і взаємодію: щоб сайт був не лише привабливим, а й зручним на комп’ютері та телефоні. Усі роботи в портфоліо — навчальні або концептуальні проєкти.</p>
+          <div class="skills-grid">
+            <div class="skill"><div class="skill-symbol">&lt;/&gt;</div><div><b>HTML</b><span>Структура сторінок</span></div></div>
+            <div class="skill"><div class="skill-symbol">✳</div><div><b>CSS</b><span>Стилі й адаптивність</span></div></div>
+            <div class="skill"><div class="skill-symbol">JS</div><div><b>JavaScript</b><span>Інтерактивні елементи</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="process">
+      <div class="container">
+        <div class="section-head reveal"><div><div class="eyebrow">Мій підхід</div><h2>Крок за кроком —<br><span class="accent">кращий результат.</span></h2></div><p>Я постійно практикуюся, перевіряю ідеї в реальних сторінках та поступово розширюю свої навички.</p></div>
+        <div class="process-grid">
+          <article class="process-item reveal"><span class="process-num">01 / ІДЕЯ</span><h3>Знайти свій стиль</h3><p>Підбираю настрій, кольори, типографіку й структуру під тему сайту.</p></article>
+          <article class="process-item reveal"><span class="process-num">02 / РОЗРОБКА</span><h3>Зібрати сторінку</h3><p>Працюю з HTML, CSS та, коли потрібно, додаю JavaScript для взаємодії.</p></article>
+          <article class="process-item reveal"><span class="process-num">03 / ПУБЛІКАЦІЯ</span><h3>Перевірити й показати</h3><p>Публікую проєкти на GitHub Pages і продовжую покращувати наступні версії.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div class="container">
+        <div class="contact-panel reveal">
+          <div class="contact-inner">
+            <div><div class="eyebrow">Контакти</div><h2>Є ідея?<br>Напиши <span style="color:#394d1d">мені.</span></h2><p>Можеш написати мені в соцмережах або переглянути код і нові роботи на GitHub.</p></div>
+            <div class="contact-list">
+              <a class="contact-link" href="https://t.me/L1ton47" target="_blank" rel="noopener noreferrer"><span>Telegram<small>@L1ton47</small></span><span class="contact-arrow" aria-hidden="true">↗</span></a>
+              <a class="contact-link" href="https://discord.com/users/1537093310101848104" target="_blank" rel="noopener noreferrer"><span>Discord<small>L1ton47</small></span><span class="contact-arrow" aria-hidden="true">↗</span></a>
+              <a class="contact-link" href="https://github.com/L1ton47" target="_blank" rel="noopener noreferrer"><span>GitHub<small>github.com/L1ton47</small></span><span class="contact-arrow" aria-hidden="true">↗</span></a>
+              <a class="contact-link" href="mailto:dimaminsk123@gmail.com"><span>E-mail<small>dimaminsk123@gmail.com</small></span><span class="contact-arrow" aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <div><strong>L1ton47.</strong> Створено з HTML, CSS та JavaScript.</div>
+      <div class="footer-links"><a href="#home">На початок ↑</a><a href="https://github.com/L1ton47" target="_blank" rel="noopener noreferrer">GitHub ↗</a><span>© <span id="currentYear">2026</span> L1ton47</span></div>
     </div>
+  </footer>
+  <a class="back-top" id="backTop" href="#home" aria-label="Повернутися нагору">↑</a>
 
-    <span>
-        © 2026 L1ton47
-    </span>
+  <script>
+    // Мобільне меню
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.setAttribute('aria-label', isOpen ? 'Закрити меню' : 'Відкрити меню');
+    });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Відкрити меню');
+    }));
 
-</footer>
+    // Фільтри та пошук проєктів
+    const projectCards = [...document.querySelectorAll('.project-card')];
+    const filterButtons = [...document.querySelectorAll('.filter-btn')];
+    const searchInput = document.getElementById('projectSearch');
+    const emptyState = document.getElementById('emptyState');
+    let activeFilter = 'all';
+    function updateProjects() {
+      const query = searchInput.value.trim().toLocaleLowerCase('uk');
+      let visibleCount = 0;
+      projectCards.forEach(card => {
+        const matchesCategory = activeFilter === 'all' || card.dataset.category === activeFilter;
+        const searchableText = (card.dataset.title + ' ' + card.innerText).toLocaleLowerCase('uk');
+        const matchesSearch = !query || searchableText.includes(query);
+        const visible = matchesCategory && matchesSearch;
+        card.hidden = !visible;
+        if (visible) visibleCount++;
+      });
+      emptyState.style.display = visibleCount ? 'none' : 'block';
+    }
+    filterButtons.forEach(button => button.addEventListener('click', () => {
+      activeFilter = button.dataset.filter;
+      filterButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      updateProjects();
+    }));
+    searchInput.addEventListener('input', updateProjects);
 
+    // Плавна поява секцій при прокручуванні
+    const revealItems = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+      revealItems.forEach(item => observer.observe(item));
+    } else {
+      revealItems.forEach(item => item.classList.add('is-visible'));
+    }
 
+    // Кнопка повернення нагору та поточний рік
+    const backTop = document.getElementById('backTop');
+    window.addEventListener('scroll', () => backTop.classList.toggle('visible', window.scrollY > 500), { passive: true });
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
